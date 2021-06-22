@@ -4,9 +4,9 @@ import Cookies from "universal-cookie";
 
 function Connection() {
   const [state, setState] = useState([]);
-  const[cook, setCook]=useState([""]);
-  const[X, setX]=useState([-1]);
-  const[Y, setY]=useState([-1]);
+  const [cook, setCook] = useState([""]);
+  const [X, setX] = useState([-1]);
+  const [Y, setY] = useState([-1]);
 
   const [qui, setQui] = useState([]);
   const [qui2, setQui2] = useState([]);
@@ -50,21 +50,14 @@ function Connection() {
   function postdelete() {
     fetch("http://localhost:8000/deletetir", {
       method: "POST",
-      body: JSON.stringify({
-        
-      }),
+      body: JSON.stringify({}),
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((resp) => {
         resp.json().then((data) => {
-       
-           
-            console.log(data);
-     
-         
-          
+          console.log(data);
         });
       })
       .catch((err) => {
@@ -73,21 +66,20 @@ function Connection() {
   }
   function postReqtir() {
     const cookies = new Cookies();
-    
-    if(cookies.get("email")!==undefined){
+
+    if (cookies.get("email") !== undefined) {
       setCook(cookies.get("email"));
-    }
-    else{
+    } else {
       console.log("veuillez vous connecter");
-      return
+      return;
     }
-    
+
     fetch("http://localhost:8000/insert/tirreact", {
       method: "POST",
       body: JSON.stringify({
         email: "test10",
         posX: X,
-        posY:Y
+        posY: Y,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -95,8 +87,7 @@ function Connection() {
     })
       .then((resp) => {
         resp.json().then((data) => {
-            console.log(data.message);
-         
+          console.log(data.message);
         });
       })
       .catch((err) => {
@@ -140,11 +131,15 @@ function Connection() {
             console.log("--" + JSON.stringify(element));
             if (element.tourj1 == 1) {
               console.log("?" + element.joueur1);
-              quipremier.push("Premier :"+element.joueur1+"Deuxieme :"+element.joueur2);
-           //   setQui(quipremier);
+              quipremier.push(
+                "Premier :" + element.joueur1 + "Deuxieme :" + element.joueur2
+              );
+              //   setQui(quipremier);
               console.log("??" + qui);
-            }else{
-              quipremier.push("Premier :"+element.joueur2+"Deuxieme :"+element.joueur1);
+            } else {
+              quipremier.push(
+                "Premier :" + element.joueur2 + "Deuxieme :" + element.joueur1
+              );
             }
             if (element.tourj1 == 0) {
               console.log("?" + element.joueur2);
@@ -159,27 +154,35 @@ function Connection() {
       }
     });
   }
-  function tirspresent() { 
-   
+  function tirspresent() {
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 5; j++) {
+        if (document.getElementById("td" + i + j)) {
+          if (document.getElementById("td" + i + j)) {
+            document.getElementById("td" + i + j).classList.remove("tir");
+          }
+        }
+      }
+    }
     fetch("http://localhost:8000/tirs").then(function (response) {
       // The API call was successful!
-    
+
       if (response.ok) {
         let data2 = response.json().then((data) => {
           console.log(data);
-          for(let i=0; i<data.length;i++){
-            if(document.getElementById("td"+data[i].placeX+data[i].placeY)){
-          document.getElementById("td"+data[i].placeX+data[i].placeY).style.backgroundColor="red";
+          for (let i = 0; i < data.length; i++) {
+            if (
+              document.getElementById("td" + data[i].placeX + data[i].placeY)
+            ) {
+              document
+                .getElementById("td" + data[i].placeX + data[i].placeY)
+                .classList.add("tir");
+            }
           }
-        }
-         
         });
       }
-      
     });
-    
   }
-
 
   function tir() {
     const cookies = new Cookies();
@@ -191,12 +194,12 @@ function Connection() {
   }
   return (
     <>
-    <div>
-      <label>posX</label>
-      <input onChange={e=>setX(e.target.value)}></input>
-      <label>posY</label>
-      <input onChange={e=>setY(e.target.value)}></input>
-    </div>
+      <div>
+        <label>posX</label>
+        <input onChange={(e) => setX(e.target.value)}></input>
+        <label>posY</label>
+        <input onChange={(e) => setY(e.target.value)}></input>
+      </div>
       <div>
         <div>
           {qui.map((d) => (
@@ -205,7 +208,6 @@ function Connection() {
             </div>
           ))}
         </div>
-
       </div>
       <div style={{ display: "flex" }}>
         <button onClick={() => postReq()}>Connection</button>
@@ -214,8 +216,14 @@ function Connection() {
         <button onClick={() => aquidejouer()}>premier</button>
         <button onClick={() => postReqtir()}>tirchoix</button>
         <button onClick={() => tirspresent()}>tirpresent</button>
-        <button onClick={() => document.getElementById("td01").style.backgroundColor ="blue"}>color</button>
-        <button onClick={() =>  postdelete()}>delete</button>
+        <button
+          onClick={() =>
+            (document.getElementById("td01").style.backgroundColor = "blue")
+          }
+        >
+          color
+        </button>
+        <button onClick={() => postdelete()}>delete</button>
         <div>
           {state.map((d) => (
             <div>{d.joueur2}</div>
