@@ -216,7 +216,7 @@ function Connection() {
                 ))}
               </div>
             </div>
-            <div style={{ display: "flex" }}>
+            <div className="but">
               <button onClick={() => postReq()}>Connection</button>
               <button onClick={() => postDeconnexion()}>deconnexion</button>
               <button onClick={() => consult()}>consulter</button>
@@ -251,110 +251,57 @@ function Connection() {
                 ))}
               </div>
             </div>
-            <div>
-              <table>
-                <tbody>
-                  <tr>
-                    <td id="td1">0</td>
-                    <td id="td2">1</td>
-                    <td id="td3">2</td>
-                    <td id="td4">3</td>
-                    <td id="td5">4</td>
-                  </tr>
-                  <tr></tr>
-                  <tr id="0">
-                    <td id="td00">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td01">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td02">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td03">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td04">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td05">0</td>
-                  </tr>
+            <header></header>
+            <nav></nav>
 
-                  <tr id="1">
-                    <td id="td10">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td11">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td12">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td13">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td14">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td15">1</td>
-                  </tr>
-                  <tr id="2">
-                    <td id="td20">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td21">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td22">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td23">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td24">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td25">2</td>
-                  </tr>
-                  <tr id="3">
-                    <td id="td30">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td31">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td32">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td33">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td34">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td35">3</td>
-                  </tr>
-                  <tr id="4">
-                    <td id="td40">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td41">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td42">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td43">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td44">
-                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-                    </td>
-                    <td id="td45">4</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="container2">
+              <div id="td00">
+                <span>0</span>
+              </div>
+              <div id="td01">
+                <span>1</span>
+              </div>
+              <div id="td02">
+                <span>2</span>
+              </div>
+              <div id="td03">
+                <span>3</span>
+              </div>
+              <div id="td04">
+                <span>4</span>
+              </div>
+
+              <div id="td10">
+                <span>1</span>
+              </div>
+              <div id="td11"></div>
+              <div id="td12"></div>
+              <div id="td13"></div>
+              <div id="td14"></div>
+
+              <div id="td20">
+                <span>2</span>
+              </div>
+              <div id="td21"></div>
+              <div id="td22"></div>
+              <div id="td23"></div>
+              <div id="td24"></div>
+
+              <div id="td30">
+                <span>3</span>
+              </div>
+              <div id="td31"></div>
+              <div id="td32"></div>
+              <div id="td33"></div>
+              <div id="td34"></div>
+
+              <div id="td40">
+                <span>4</span>
+              </div>
+              <div id="td41"></div>
+              <div id="td42"></div>
+              <div id="td43"></div>
+              <div id="td44"></div>
             </div>
           </div>
         </div>
