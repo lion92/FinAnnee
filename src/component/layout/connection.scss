@@ -11,13 +11,14 @@ img {
   display: grid;
   grid-template-columns: 10em 1fr;
   grid-template-rows: auto 1fr auto;
-  background-color: yellow;
+  background-color: lightblue;
 
 }
 header {
   grid-column: 1 / span 2;
   grid-row: 1;
-  background-color: red;
+  background-color: lightseagreen;
+  text-align: center;
 }
 .nav {
 
@@ -26,7 +27,7 @@ header {
   grid-column: 1;
   grid-row: 2;
  
-  background-color: blue;
+  background-color: lightpink;
 }
 .plateauJeu,.but {
   display: flex;
@@ -34,15 +35,16 @@ header {
   grid-column: 2;
   grid-row: 2;
 
-  background-color: green;
+  background-color: lightskyblue;
   flex-wrap: wrap;
+  margin-left: 10px;
 }
 
 footer {
   display: flex;
   grid-column: 1 / span 2;
   grid-row: 3;
-  background-color: orange;
+  background-color: lightcoral;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -193,3 +195,32 @@ span {
 .tir {
     background-color: red;
   }
+  button{
+    background-color: lightslategrey; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10%;
+    margin-bottom: 20px;
+    margin-left: 10px;
+  }
+  input{
+    background-color: white; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10%;
+    margin-bottom: 20px;
+    margin-left: 10px;
+
+  }
+  label{margin-left: 10px;}
+  div{margin-left: 5px;}
