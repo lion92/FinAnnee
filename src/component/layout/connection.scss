@@ -1,3 +1,49 @@
-img{width: 30px;height: 30px; margin-left:10px ;}
-td{margin-left: 30px;}
-.tir{background-color: red;}
+img {
+  min-width: 30px;
+  min-height: 30px;
+  max-width: 60px;
+  max-height: 60px;
+}
+
+.tir {
+  background-color: red;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 10em 1fr;
+  grid-template-rows: auto 1fr auto;
+  background-color: yellow;
+}
+header {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  background-color: red;
+}
+.nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  grid-column: 1;
+  grid-row: 2;
+  flex-wrap: wrap;
+  background-color: blue;
+}
+.plateauJeu {
+  display: flex;
+
+  grid-column: 2;
+  grid-row: 2;
+
+  background-color: green;
+  flex-wrap: wrap;
+}
+
+footer {
+  display: flex;
+  grid-column: 1 / span 2;
+  grid-row: 3;
+  background-color: orange;
+  justify-content: center;
+  flex-wrap: wrap;
+}

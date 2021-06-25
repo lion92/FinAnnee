@@ -194,159 +194,171 @@ function Connection() {
   }
   return (
     <>
-      <div>
-        <label>posX</label>
-        <input onChange={(e) => setX(e.target.value)}></input>
-        <label>posY</label>
-        <input onChange={(e) => setY(e.target.value)}></input>
-      </div>
-      <div>
-        <div>
-          {qui.map((d) => (
+      <div className="container">
+        <header>
+          <h1>Bataille Navale</h1>
+        </header>
+        <div className="nav"></div>
+        <div className="centrer">
+          <div className="plateauJeu">
             <div>
-              <p>{d} </p>
+              <label>posX</label>
+              <input onChange={(e) => setX(e.target.value)}></input>
+              <label>posY</label>
+              <input onChange={(e) => setY(e.target.value)}></input>
             </div>
-          ))}
-        </div>
-      </div>
-      <div style={{ display: "flex" }}>
-        <button onClick={() => postReq()}>Connection</button>
-        <button onClick={() => postDeconnexion()}>deconnexion</button>
-        <button onClick={() => consult()}>consulter</button>
-        <button onClick={() => aquidejouer()}>premier</button>
-        <button onClick={() => postReqtir()}>tirchoix</button>
-        <button onClick={() => tirspresent()}>tirpresent</button>
-        <button
-          onClick={() =>
-            (document.getElementById("td01").style.backgroundColor = "blue")
-          }
-        >
-          color
-        </button>
-        <button onClick={() => postdelete()}>delete</button>
-        <div>
-          {state.map((d) => (
-            <div>{d.joueur2}</div>
-          ))}
-        </div>
-        <div>
-          {state.map((d) => (
             <div>
-              {d.tourj1}
-              <span> </span>
+              <div>
+                {qui.map((d) => (
+                  <div>
+                    <p>{d} </p>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
-        </div>
-        <div>
-          {state.map((d) => (
-            <div>{d.idAdversaire} </div>
-          ))}
-        </div>
-      </div>
-      <div>
-        <table>
-          <tbody>
-            <tr>
-              <td id="td1">0</td>
-              <td id="td2">1</td>
-              <td id="td3">2</td>
-              <td id="td4">3</td>
-              <td id="td5">4</td>
-            </tr>
-            <tr></tr>
-            <tr id="0">
-              <td id="td00">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td01">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td02">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td03">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td04">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td05">0</td>
-            </tr>
+            <div style={{ display: "flex" }}>
+              <button onClick={() => postReq()}>Connection</button>
+              <button onClick={() => postDeconnexion()}>deconnexion</button>
+              <button onClick={() => consult()}>consulter</button>
+              <button onClick={() => aquidejouer()}>premier</button>
+              <button onClick={() => postReqtir()}>tirchoix</button>
+              <button onClick={() => tirspresent()}>tirpresent</button>
+              <button
+                onClick={() =>
+                  (document.getElementById("td01").style.backgroundColor =
+                    "blue")
+                }
+              >
+                color
+              </button>
+              <button onClick={() => postdelete()}>delete</button>
+              <div>
+                {state.map((d) => (
+                  <div>{d.joueur2}</div>
+                ))}
+              </div>
+              <div>
+                {state.map((d) => (
+                  <div>
+                    {d.tourj1}
+                    <span> </span>
+                  </div>
+                ))}
+              </div>
+              <div>
+                {state.map((d) => (
+                  <div>{d.idAdversaire} </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td id="td1">0</td>
+                    <td id="td2">1</td>
+                    <td id="td3">2</td>
+                    <td id="td4">3</td>
+                    <td id="td5">4</td>
+                  </tr>
+                  <tr></tr>
+                  <tr id="0">
+                    <td id="td00">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td01">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td02">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td03">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td04">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td05">0</td>
+                  </tr>
 
-            <tr id="1">
-              <td id="td10">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td11">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td12">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td13">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td14">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td15">1</td>
-            </tr>
-            <tr id="2">
-              <td id="td20">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td21">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td22">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td23">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td24">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td25">2</td>
-            </tr>
-            <tr id="3">
-              <td id="td30">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td31">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td32">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td33">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td34">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td35">3</td>
-            </tr>
-            <tr id="4">
-              <td id="td40">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td41">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td42">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td43">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td44">
-                <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
-              </td>
-              <td id="td45">4</td>
-            </tr>
-          </tbody>
-        </table>
+                  <tr id="1">
+                    <td id="td10">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td11">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td12">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td13">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td14">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td15">1</td>
+                  </tr>
+                  <tr id="2">
+                    <td id="td20">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td21">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td22">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td23">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td24">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td25">2</td>
+                  </tr>
+                  <tr id="3">
+                    <td id="td30">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td31">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td32">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td33">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td34">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td35">3</td>
+                  </tr>
+                  <tr id="4">
+                    <td id="td40">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td41">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td42">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td43">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td44">
+                      <img src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png" />
+                    </td>
+                    <td id="td45">4</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <footer>kriss.clotilde@gmail.com</footer>
       </div>
     </>
   );
