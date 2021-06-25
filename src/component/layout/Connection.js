@@ -198,24 +198,29 @@ function Connection() {
         <header>
           <h1>Bataille Navale</h1>
         </header>
-        <div className="nav"></div>
-        <div className="centrer">
-          <div className="plateauJeu">
-            <div>
-              <label>posX</label>
-              <input onChange={(e) => setX(e.target.value)}></input>
-              <label>posY</label>
-              <input onChange={(e) => setY(e.target.value)}></input>
-            </div>
-            <div>
-              <div>
+        <div className="nav">  <div>
                 {qui.map((d) => (
                   <div>
                     <p>{d} </p>
                   </div>
                 ))}
               </div>
+              <div>
+                {state.map((d) => (
+                  <div>{d.joueur2}</div>
+                ))}
+              </div></div>
+        <div className="centrer">
+          <div className="plateauJeu">
+            <div>
+              <label>posX</label>
+              <input onChange={(e) => setX(e.target.value)}></input>
             </div>
+            <div>
+              <label>posY</label>
+              <input onChange={(e) => setY(e.target.value)}></input>
+            </div>
+            <div></div>
             <div className="but">
               <button onClick={() => postReq()}>Connection</button>
               <button onClick={() => postDeconnexion()}>deconnexion</button>
@@ -232,11 +237,7 @@ function Connection() {
                 color
               </button>
               <button onClick={() => postdelete()}>delete</button>
-              <div>
-                {state.map((d) => (
-                  <div>{d.joueur2}</div>
-                ))}
-              </div>
+
               <div>
                 {state.map((d) => (
                   <div>
@@ -252,7 +253,9 @@ function Connection() {
               </div>
             </div>
             <header></header>
-            <nav></nav>
+            <nav>
+            
+            </nav>
 
             <div className="container2">
               <div id="td00">

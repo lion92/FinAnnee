@@ -5,16 +5,14 @@ img {
   max-height: 60px;
 }
 
-.tir {
-  background-color: red;
-}
+
 
 .container {
   display: grid;
   grid-template-columns: 10em 1fr;
   grid-template-rows: auto 1fr auto;
   background-color: yellow;
-  height: 460px;
+
 }
 header {
   grid-column: 1 / span 2;
@@ -22,12 +20,12 @@ header {
   background-color: red;
 }
 .nav {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+
+
+
   grid-column: 1;
   grid-row: 2;
-  flex-wrap: wrap;
+ 
   background-color: blue;
 }
 .plateauJeu,.but {
@@ -73,7 +71,7 @@ footer {
 #td42,
 #td43,
 #td44 {
-  background-color: blue;
+  border: solid 1px black;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -150,45 +148,48 @@ footer {
 
 #td30 {
   grid-column-start: 1;
-  grid-row-start: 3;
+  grid-row-start: 4;
 }
 #td31 {
   grid-column-start: 2;
-  grid-row-start: 3;
+  grid-row-start: 4;
 }
 #td32 {
   grid-column-start: 3;
-  grid-row-start: 3;
+  grid-row-start: 4;
 }
 #td33 {
   grid-column-start: 4;
-  grid-row-start: 3;
+  grid-row-start: 4;
 }
 #td34 {
   grid-column-start: 5;
-  grid-row-start: 3;
+  grid-row-start: 4;
 }
 
 #td40 {
   grid-column-start: 1;
-  grid-row-start: 4;
+  grid-row-start: 5;
 }
 #td41 {
   grid-column-start: 2;
-  grid-row-start: 4;
+  grid-row-start: 5;
 }
 #td42 {
   grid-column-start: 3;
-  grid-row-start: 4;
+  grid-row-start: 5;
 }
 #td43 {
   grid-column-start: 4;
-  grid-row-start: 4;
+  grid-row-start: 5;
 }
 #td44 {
   grid-column-start: 5;
-  grid-row-start: 4;
+  grid-row-start: 5;
 }
 span {
   color: white;
 }
+.tir {
+    background-color: red;
+  }
