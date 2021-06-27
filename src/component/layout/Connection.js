@@ -7,9 +7,12 @@ function Connection() {
   const [cook, setCook] = useState([""]);
   const [X, setX] = useState([-1]);
   const [Y, setY] = useState([-1]);
-
+  const [Idelement, setId]= useState("");
   const [qui, setQui] = useState([]);
   const [qui2, setQui2] = useState([]);
+ function tir2(x1,y1){
+  postReqtir(x1,y1);tirspresent();
+ }
   function fetchdata() {
     fetch("http://localhost:8000/partieactu").then(function (response) {
       // The API call was successful!
@@ -20,6 +23,7 @@ function Connection() {
       }
     });
   }
+ 
   function postReq() {
     fetch("http://localhost:8000/login", {
       method: "POST",
@@ -64,7 +68,7 @@ function Connection() {
         console.log(err);
       });
   }
-  function postReqtir() {
+  function postReqtir(x2,y2) {
     const cookies = new Cookies();
 
     if (cookies.get("email") !== undefined) {
@@ -78,8 +82,8 @@ function Connection() {
       method: "POST",
       body: JSON.stringify({
         email: "test10",
-        posX: X,
-        posY: Y,
+        posX: x2,
+        posY: y2,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -88,6 +92,7 @@ function Connection() {
       .then((resp) => {
         resp.json().then((data) => {
           console.log(data.message);
+          tirspresent();
         });
       })
       .catch((err) => {
@@ -154,6 +159,10 @@ function Connection() {
       }
     });
   }
+  function handleClick (e) {
+    // access to e.target here
+    console.log(e);
+}
   function tirspresent() {
     for (let i = 0; i < 5; i++) {
       for (let j = 0; j < 5; j++) {
@@ -164,6 +173,7 @@ function Connection() {
         }
       }
     }
+  
     fetch("http://localhost:8000/tirs").then(function (response) {
       // The API call was successful!
 
@@ -198,27 +208,30 @@ function Connection() {
         <header>
           <h1>Bataille Navale</h1>
         </header>
-        <div className="nav">  <div>
-                {qui.map((d) => (
-                  <div>
-                    <p>{d} </p>
-                  </div>
-                ))}
-              </div>
+        <div className="nav">
+          {" "}
+          <div>
+            {qui.map((d) => (
               <div>
-                {state.map((d) => (
-                  <div>{d.joueur2}</div>
-                ))}
-              </div></div>
+                <p>{d} </p>
+              </div>
+            ))}
+          </div>
+          <div>
+            {state.map((d) => (
+              <div>{d.joueur2}</div>
+            ))}
+          </div>
+        </div>
         <div className="centrer">
           <div className="plateauJeu">
             <div>
               <label>posX</label>
-              <input onChange={(e) => setX(e.target.value)}></input>
+              <input onChange={(e) =>{ setX(e.target.value)}}></input>
             </div>
             <div>
               <label>posY</label>
-              <input onChange={(e) => setY(e.target.value)}></input>
+              <input onChange={(e) =>{setY(e.target.value)}}></input>
             </div>
             <div></div>
             <div className="but">
@@ -253,58 +266,57 @@ function Connection() {
               </div>
             </div>
             <header></header>
-            <nav>
-            
-            </nav>
+            <nav></nav>
 
             <div className="container2">
-              <div id="td00">
+              <div  onClick={() => {tir2(0,0)
+            } }id="td00">
                 <span>0</span>
               </div>
-              <div id="td01">
+              <div onClick={() => {tir2(0,1)}} id="td01">
                 <span>1</span>
               </div>
-              <div id="td02">
+              <div onClick={() => {tir2(0,2)}}id="td02">
                 <span>2</span>
               </div>
-              <div id="td03">
+              <div onClick={() => {tir2(0,3)}}id="td03">
                 <span>3</span>
               </div>
-              <div id="td04">
+              <div onClick={() => {tir2(0,4)}}id="td04">
                 <span>4</span>
               </div>
 
-              <div id="td10">
+              <div onClick={() => {tir2(1,0)}}id="td10">
                 <span>1</span>
               </div>
-              <div id="td11"></div>
-              <div id="td12"></div>
-              <div id="td13"></div>
-              <div id="td14"></div>
+              <div onClick={() => {tir2(1,1)}}id="td11"></div>
+              <div onClick={() => {tir2(1,2)}}id="td12"></div>
+              <div onClick={() => {tir2(1,3)}}id="td13"></div>
+              <div onClick={() => {tir2(1,4)}} id="td14"></div>
 
-              <div id="td20">
+              <div onClick={() => {tir2(2,0)}} id="td20">
                 <span>2</span>
               </div>
-              <div id="td21"></div>
-              <div id="td22"></div>
-              <div id="td23"></div>
-              <div id="td24"></div>
+              <div onClick={() => {tir2(2,1)}} id="td21"></div>
+              <div onClick={() => {tir2(2,2)}} id="td22"></div>
+              <div onClick={() => {tir2(2,3)}} id="td23"></div>
+              <div onClick={() => {tir2(2,4)}} id="td24"></div>
 
-              <div id="td30">
+              <div onClick={() => {tir2(3,0)}} id="td30">
                 <span>3</span>
               </div>
-              <div id="td31"></div>
-              <div id="td32"></div>
-              <div id="td33"></div>
-              <div id="td34"></div>
+              <div onClick={() => {tir2(3,1)}} id="td31"></div>
+              <div onClick={() => {tir2(3,2)}} id="td32"></div>
+              <div onClick={() => {tir2(3,3)}} id="td33"></div>
+              <div onClick={() => {tir2(3,4)}} id="td34"></div>
 
-              <div id="td40">
+              <div onClick={() => {tir2(4,0)}}  id="td40">
                 <span>4</span>
               </div>
-              <div id="td41"></div>
-              <div id="td42"></div>
-              <div id="td43"></div>
-              <div id="td44"></div>
+              <div onClick={() => {tir2(4,1)}} id="td41"></div>
+              <div onClick={() => {tir2(4,2)}} id="td42"></div>
+              <div onClick={() => {tir2(4,3)}} id="td43"></div>
+              <div onClick={() => {tir2(4,4)}} id="td44"></div>
             </div>
           </div>
         </div>
