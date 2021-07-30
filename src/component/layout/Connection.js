@@ -3,16 +3,21 @@ import "./connection.scss";
 import Cookies from "universal-cookie";
 
 function Connection() {
+  const [adversaire, setAdversaire] = useState("");
+  const [emailconfirm, setEmailconfirm] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [state, setState] = useState([]);
   const [cook, setCook] = useState([""]);
   const [X, setX] = useState([-1]);
   const [Y, setY] = useState([-1]);
-  const [Idelement, setId]= useState("");
+  const [Idelement, setId] = useState("");
   const [qui, setQui] = useState([]);
   const [qui2, setQui2] = useState([]);
- function tir2(x1,y1){
-  postReqtir(x1,y1);tirspresent();
- }
+  function tir2(x1, y1) {
+    postReqtir(x1, y1);
+    tirspresent();
+  }
   function fetchdata() {
     fetch("http://localhost:8000/partieactu").then(function (response) {
       // The API call was successful!
@@ -23,13 +28,13 @@ function Connection() {
       }
     });
   }
- 
+
   function postReq() {
     fetch("http://localhost:8000/login", {
       method: "POST",
       body: JSON.stringify({
-        email: "test10",
-        password: "12345",
+        email: email,
+        password: password,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +45,10 @@ function Connection() {
           if (data.message.indexOf("Connecte") !== -1) {
             const cookies = new Cookies();
             cookies.set("email", data.message, { path: "/" });
-            console.log(cookies.get("email")); // Pacman
+            console.log(cookies.get("email"));
+            setEmailconfirm(cookies.get("email"));
+
+            // Pacman
             console.log(data.message);
           } else {
             console.log(data.message);
@@ -62,13 +70,34 @@ function Connection() {
       .then((resp) => {
         resp.json().then((data) => {
           console.log(data);
+          tirspresent();
         });
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  function postReqtir(x2,y2) {
+  function postdeleteBateau() {
+    fetch("http://localhost:8000/effacerBateauBis", {
+      method: "POST",
+      body: JSON.stringify({
+        email: new Cookies().get("email"),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        resp.json().then((data) => {
+          console.log(data);
+          tirspresent();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function postReqtir(x2, y2) {
     const cookies = new Cookies();
 
     if (cookies.get("email") !== undefined) {
@@ -84,6 +113,40 @@ function Connection() {
         email: "test10",
         posX: x2,
         posY: y2,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        resp.json().then((data) => {
+          console.log(data.message);
+          tirspresent();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function postReactBateau(x2, y2) {
+    x2 = X;
+    y2 = Y;
+    const cookies = new Cookies();
+
+    if (cookies.get("email") !== undefined) {
+      setCook(cookies.get("email"));
+    } else {
+      console.log("veuillez vous connecter");
+      return;
+    }
+
+    fetch("http://localhost:8000/insert/reactbateau/", {
+      method: "POST",
+      body: JSON.stringify({
+        email: "test10",
+        posX: x2,
+        posY: y2,
+        email: cook,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -159,10 +222,23 @@ function Connection() {
       }
     });
   }
-  function handleClick (e) {
+  function handleClick(e) {
     // access to e.target here
     console.log(e);
-}
+  }
+
+  function cleartirspresent() {
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 5; j++) {
+        if (document.getElementById("td" + i + j)) {
+          if (document.getElementById("td" + i + j)) {
+            document.getElementById("td" + i + j).classList.remove("tir");
+          }
+        }
+      }
+    }
+  }
+
   function tirspresent() {
     for (let i = 0; i < 5; i++) {
       for (let j = 0; j < 5; j++) {
@@ -173,7 +249,7 @@ function Connection() {
         }
       }
     }
-  
+
     fetch("http://localhost:8000/tirs").then(function (response) {
       // The API call was successful!
 
@@ -193,6 +269,66 @@ function Connection() {
       }
     });
   }
+  function tirspresentParAdversaire() {
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 5; j++) {
+        if (document.getElementById("td" + i + j)) {
+          if (document.getElementById("td" + i + j)) {
+            document.getElementById("td" + i + j).classList.remove("tir");
+          }
+        }
+      }
+    }
+    if(emailconfirm===""||adversaire===""){
+      alert(emailconfirm.split("Connecte ")[1].split("true")[0]);
+      alert(adversaire);
+      alert("Probème sur email ou adversaire");
+      return
+    }
+
+    fetch("http://localhost:8000/tirs/" + emailconfirm.split("Connecte ")[1].split("true")[0] +"/"+ adversaire).then(
+      function (response) {
+        // The API call was successful!
+
+        if (response.ok) {
+          let data2 = response.json().then((data) => {
+            console.log(data);
+            for (let i = 0; i < data.length; i++) {
+              if (
+                document.getElementById("td" + data[i].placeX + data[i].placeY)
+              ) {
+                document
+                  .getElementById("td" + data[i].placeX + data[i].placeY)
+                  .classList.add("tir");
+              }
+            }
+          });
+        }
+      }
+    );
+  }
+  function bateauPresent() {
+    fetch("http://localhost:8000/bateauTT").then(function (response) {
+      // The API call was successful!
+      const cookies = new Cookies();
+      if (response.ok) {
+        let data2 = response.json().then((data) => {
+          console.log(data);
+          for (let i = 0; i < data.length; i++) {
+            if (
+              document.getElementById("td" + data[i].bateauX + data[i].bateauY)
+            ) {
+              if (data.email == cookies.get("email")) {
+                document
+                  .getElementById("td" + data[i].bateauX + data[i].bateauY)
+                  .classList.add("tir");
+              }
+            }
+          }
+        });
+      }
+    });
+  }
 
   function tir() {
     const cookies = new Cookies();
@@ -202,6 +338,7 @@ function Connection() {
       console.log(cookies.get("email")); // Pacman
     }
   }
+  tirspresent();
   return (
     <>
       <div className="container">
@@ -224,14 +361,53 @@ function Connection() {
           </div>
         </div>
         <div className="centrer">
+          <div>
+            <button onClick={() => cleartirspresent()}></button>
+          </div>
+          <div>
+            <label>Email</label>
+            <input
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            ></input>
+          </div>
+          <div>
+            <label>Password</label>
+            <input
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            ></input>
+          </div>
+          <button onClick={() => postReq()}>Connexion</button>
+          <div>
+            <label>adversaire</label>
+            <input
+              onChange={(e) => {
+                setAdversaire(e.target.value);
+              }}
+            ></input>
+          </div>
+          <button onClick={() => tirspresentParAdversaire()}>
+            tirsParAdversaire
+          </button>
           <div className="plateauJeu">
             <div>
               <label>posX</label>
-              <input onChange={(e) =>{ setX(e.target.value)}}></input>
+              <input
+                onChange={(e) => {
+                  setX(e.target.value);
+                }}
+              ></input>
             </div>
             <div>
               <label>posY</label>
-              <input onChange={(e) =>{setY(e.target.value)}}></input>
+              <input
+                onChange={(e) => {
+                  setY(e.target.value);
+                }}
+              ></input>
             </div>
             <div></div>
             <div className="but">
@@ -241,6 +417,12 @@ function Connection() {
               <button onClick={() => aquidejouer()}>premier</button>
               <button onClick={() => postReqtir()}>tirchoix</button>
               <button onClick={() => tirspresent()}>tirpresent</button>
+              <button onClick={() => postReactBateau()}>Poser le bateau</button>
+              <button onClick={() => postdeleteBateau()}>
+                Poser le bateau
+              </button>
+              <button onClick={() => bateauPresent()}>Poser le bateau</button>
+
               <button
                 onClick={() =>
                   (document.getElementById("td01").style.backgroundColor =
@@ -269,54 +451,178 @@ function Connection() {
             <nav></nav>
 
             <div className="container2">
-              <div  onClick={() => {tir2(0,0)
-            } }id="td00">
+              <div
+                onClick={() => {
+                  tir2(0, 0);
+                }}
+                id="td00"
+              >
                 <span>0</span>
               </div>
-              <div onClick={() => {tir2(0,1)}} id="td01">
+              <div
+                onClick={() => {
+                  tir2(0, 1);
+                }}
+                id="td01"
+              >
                 <span>1</span>
               </div>
-              <div onClick={() => {tir2(0,2)}}id="td02">
+              <div
+                onClick={() => {
+                  tir2(0, 2);
+                }}
+                id="td02"
+              >
                 <span>2</span>
               </div>
-              <div onClick={() => {tir2(0,3)}}id="td03">
+              <div
+                onClick={() => {
+                  tir2(0, 3);
+                }}
+                id="td03"
+              >
                 <span>3</span>
               </div>
-              <div onClick={() => {tir2(0,4)}}id="td04">
+              <div
+                onClick={() => {
+                  tir2(0, 4);
+                }}
+                id="td04"
+              >
                 <span>4</span>
               </div>
 
-              <div onClick={() => {tir2(1,0)}}id="td10">
+              <div
+                onClick={() => {
+                  tir2(1, 0);
+                }}
+                id="td10"
+              >
                 <span>1</span>
               </div>
-              <div onClick={() => {tir2(1,1)}}id="td11"></div>
-              <div onClick={() => {tir2(1,2)}}id="td12"></div>
-              <div onClick={() => {tir2(1,3)}}id="td13"></div>
-              <div onClick={() => {tir2(1,4)}} id="td14"></div>
+              <div
+                onClick={() => {
+                  tir2(1, 1);
+                }}
+                id="td11"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(1, 2);
+                }}
+                id="td12"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(1, 3);
+                }}
+                id="td13"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(1, 4);
+                }}
+                id="td14"
+              ></div>
 
-              <div onClick={() => {tir2(2,0)}} id="td20">
+              <div
+                onClick={() => {
+                  tir2(2, 0);
+                }}
+                id="td20"
+              >
                 <span>2</span>
               </div>
-              <div onClick={() => {tir2(2,1)}} id="td21"></div>
-              <div onClick={() => {tir2(2,2)}} id="td22"></div>
-              <div onClick={() => {tir2(2,3)}} id="td23"></div>
-              <div onClick={() => {tir2(2,4)}} id="td24"></div>
+              <div
+                onClick={() => {
+                  tir2(2, 1);
+                }}
+                id="td21"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(2, 2);
+                }}
+                id="td22"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(2, 3);
+                }}
+                id="td23"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(2, 4);
+                }}
+                id="td24"
+              ></div>
 
-              <div onClick={() => {tir2(3,0)}} id="td30">
+              <div
+                onClick={() => {
+                  tir2(3, 0);
+                }}
+                id="td30"
+              >
                 <span>3</span>
               </div>
-              <div onClick={() => {tir2(3,1)}} id="td31"></div>
-              <div onClick={() => {tir2(3,2)}} id="td32"></div>
-              <div onClick={() => {tir2(3,3)}} id="td33"></div>
-              <div onClick={() => {tir2(3,4)}} id="td34"></div>
+              <div
+                onClick={() => {
+                  tir2(3, 1);
+                }}
+                id="td31"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(3, 2);
+                }}
+                id="td32"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(3, 3);
+                }}
+                id="td33"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(3, 4);
+                }}
+                id="td34"
+              ></div>
 
-              <div onClick={() => {tir2(4,0)}}  id="td40">
+              <div
+                onClick={() => {
+                  tir2(4, 0);
+                }}
+                id="td40"
+              >
                 <span>4</span>
               </div>
-              <div onClick={() => {tir2(4,1)}} id="td41"></div>
-              <div onClick={() => {tir2(4,2)}} id="td42"></div>
-              <div onClick={() => {tir2(4,3)}} id="td43"></div>
-              <div onClick={() => {tir2(4,4)}} id="td44"></div>
+              <div
+                onClick={() => {
+                  tir2(4, 1);
+                }}
+                id="td41"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(4, 2);
+                }}
+                id="td42"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(4, 3);
+                }}
+                id="td43"
+              ></div>
+              <div
+                onClick={() => {
+                  tir2(4, 4);
+                }}
+                id="td44"
+              ></div>
             </div>
           </div>
         </div>
