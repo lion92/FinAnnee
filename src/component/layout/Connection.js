@@ -16,7 +16,7 @@ function Connection() {
   const [qui2, setQui2] = useState([]);
   function tir2(x1, y1) {
     postReqtir(x1, y1);
-    tirspresent();
+    
   }
   function fetchdata() {
     fetch("http://localhost:8000/partieactu").then(function (response) {
@@ -107,10 +107,20 @@ function Connection() {
       return;
     }
 
+    if(emailconfirm===""){
+      alert("email incorrect");
+      return;
+    }
+    if(adversaire===""){
+      alert("adversaire incorrect");
+      return;
+    }
+
     fetch("http://localhost:8000/insert/tirreact", {
       method: "POST",
       body: JSON.stringify({
-        email: "test10",
+        email: emailconfirm.split("Connecte ")[1].split("true")[0],
+        adversaire:adversaire,
         posX: x2,
         posY: y2,
       }),
@@ -121,7 +131,8 @@ function Connection() {
       .then((resp) => {
         resp.json().then((data) => {
           console.log(data.message);
-          tirspresent();
+          cleartirspresent();
+          tirspresentParAdversaire();
         });
       })
       .catch((err) => {
@@ -155,7 +166,7 @@ function Connection() {
       .then((resp) => {
         resp.json().then((data) => {
           console.log(data.message);
-          tirspresent();
+          
         });
       })
       .catch((err) => {
@@ -338,7 +349,7 @@ function Connection() {
       console.log(cookies.get("email")); // Pacman
     }
   }
-  tirspresent();
+
   return (
     <>
       <div className="container">
