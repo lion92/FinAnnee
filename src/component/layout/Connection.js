@@ -18,6 +18,7 @@ function Connection() {
     postReqtir(x1, y1);
     
   }
+
   useEffect(()=> {document.querySelector(".nav").style.display ='none';document.querySelector("#connection").style.display = 'none';cleartirspresent(); tirspresentParAdversaire()},[adversaire, emailconfirm]);
   function fetchdata() {
     fetch("http://localhost:8000/partieactu").then(function (response) {
@@ -208,7 +209,7 @@ function Connection() {
         let data2 = response.json().then((data) => {
           console.log(data.message);
           let quipremier = [];
-          let quideucieme = [];
+          let quideuxieme = [];
           data.message.forEach((element) => {
             console.log("--" + JSON.stringify(element));
             if (element.tourj1 == 1) {
@@ -225,13 +226,13 @@ function Connection() {
             }
             if (element.tourj1 == 0) {
               console.log("?" + element.joueur2);
-              quideucieme.push(element.joueur2);
-              setQui2(quideucieme);
+              quideuxieme.push(element.joueur2);
+              setQui2(quideuxieme);
               console.log("??" + qui);
             }
           });
           setQui(quipremier);
-          setQui2(quideucieme);
+          setQui2(quideuxieme);
         });
       }
     });
