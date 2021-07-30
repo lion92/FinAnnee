@@ -18,6 +18,7 @@ function Connection() {
     postReqtir(x1, y1);
     
   }
+  useEffect(()=> {document.querySelector(".nav").style.display ='none';document.querySelector("#connection").style.display = 'none';cleartirspresent(); tirspresentParAdversaire()},[adversaire, emailconfirm]);
   function fetchdata() {
     fetch("http://localhost:8000/partieactu").then(function (response) {
       // The API call was successful!
@@ -190,6 +191,8 @@ function Connection() {
         console.log(err);
       });*/
     const cookies = new Cookies();
+    setEmailconfirm("");
+    setEmail("");
     cookies.remove("email");
     //   console.log(cookies.get('email')); // Pacman
   }
@@ -239,6 +242,7 @@ function Connection() {
   }
 
   function cleartirspresent() {
+    console.log("passe");
     for (let i = 0; i < 5; i++) {
       for (let j = 0; j < 5; j++) {
         if (document.getElementById("td" + i + j)) {
@@ -291,8 +295,6 @@ function Connection() {
       }
     }
     if(emailconfirm===""||adversaire===""){
-      alert(emailconfirm.split("Connecte ")[1].split("true")[0]);
-      alert(adversaire);
       alert("Probème sur email ou adversaire");
       return
     }
@@ -356,6 +358,7 @@ function Connection() {
         <header>
           <h1>Bataille Navale</h1>
         </header>
+      
         <div className="nav">
           {" "}
           <div>
@@ -372,9 +375,16 @@ function Connection() {
           </div>
         </div>
         <div className="centrer">
+        <div>
+        <button onClick={()=>{if (document.querySelector(".nav").style.display === 'none') {document.querySelector(".nav").style.display="block"}else{document.querySelector(".nav").style.display="none"; }}}>parties</button>
+        </div>
           <div>
             <button onClick={() => cleartirspresent()}></button>
           </div>
+          <div>
+        <button onClick={()=>{if (document.querySelector("#connection").style.display === 'none') {document.querySelector("#connection").style.display="block"}else{document.querySelector("#connection").style.display="none"; }}}>Affiché connection</button>
+        </div>
+        <div id="connection">
           <div>
             <label>Email</label>
             <input
@@ -393,6 +403,7 @@ function Connection() {
           </div>
           <button onClick={() => postReq()}>Connexion</button>
           <div>
+            </div>
             <label>adversaire</label>
             <input
               onChange={(e) => {
