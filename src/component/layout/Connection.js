@@ -385,7 +385,7 @@ function Connection() {
           </div>
           <div>
             <label>Password</label>
-            <input
+            <input type="password"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
