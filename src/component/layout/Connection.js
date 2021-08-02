@@ -3,7 +3,9 @@ import "./connection.scss";
 import Cookies from "universal-cookie";
 
 function Connection() {
+  const [partieSelect, setParties] = useState([]);
   const [adversaire, setAdversaire] = useState("");
+  const [adversairetext, setAdversaireText] = useState("");
   const [emailconfirm, setEmailconfirm] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,16 +18,46 @@ function Connection() {
   const [qui2, setQui2] = useState([]);
   function tir2(x1, y1) {
     postReqtir(x1, y1);
-    
+    console.log(adversaire);
+    console.log(adversairetext);
   }
 
-  useEffect(()=> {document.querySelector(".nav").style.display ='none';document.querySelector("#connection").style.display = 'none';cleartirspresent(); tirspresentParAdversaire()},[adversaire, emailconfirm]);
+  useEffect(() => {
+    fetchdata();
+    cleartirspresent();
+    tirspresentParAdversaire();
+  }, [adversairetext, emailconfirm]);
   function fetchdata() {
     fetch("http://localhost:8000/partieactu").then(function (response) {
       // The API call was successful!
       if (response.ok) {
         let data = response.json().then((data) => {
-          setState(data.message);
+          let contrequiSelect = [];
+
+          data.message.forEach((element) => {
+            if (
+              emailconfirm === "" ||
+              emailconfirm === undefined ||
+              emailconfirm === null
+            ) {
+              return;
+            }
+            if (
+              emailconfirm
+                .split("Connecte ")[1]
+                .split("true")[0]
+                .includes(element.joueur1) ||
+              emailconfirm
+                .split("Connecte ")[1]
+                .split("true")[0]
+                .includes(element.joueur2)
+            ) {
+              contrequiSelect.push(element);
+            }
+          });
+          console.log("!!" + JSON.stringify(contrequiSelect));
+          setParties(contrequiSelect);
+          console.log(partieSelect);
         });
       }
     });
@@ -35,7 +67,7 @@ function Connection() {
     fetch("http://localhost:8000/login", {
       method: "POST",
       body: JSON.stringify({
-        email: email,
+        email: document.querySelector("#email").value,
         password: password,
       }),
       headers: {
@@ -44,16 +76,18 @@ function Connection() {
     })
       .then((resp) => {
         resp.json().then((data) => {
+          const cookies = new Cookies();
           if (data.message.indexOf("Connecte") !== -1) {
-            const cookies = new Cookies();
+            
             cookies.set("email", data.message, { path: "/" });
-            console.log(cookies.get("email"));
+            console.log("YYYYYYYY"+cookies.get("email"));
             setEmailconfirm(cookies.get("email"));
 
             // Pacman
             console.log(data.message);
           } else {
             console.log(data.message);
+            setEmailconfirm(cookies.get("email"));
           }
         });
       })
@@ -100,6 +134,25 @@ function Connection() {
       });
   }
   function postReqtir(x2, y2) {
+     let adv = "";
+    console.log("----" + adversaire);
+    if (
+      emailconfirm === undefined ||
+      emailconfirm === null ||
+      emailconfirm === "" ||
+      adversairetext === null ||
+      adversairetext === undefined ||
+      adversairetext === ""
+    ) {
+      return;
+    }
+    if (adversairetext.split("/")[1] === emailconfirm) {
+      adv = adversairetext.split("/")[0];
+    } else {
+      adv = adversairetext.split("/")[1];
+    }
+    console.log("esaii" + adversairetext);
+    console.log("esaii" + adversaire);
     const cookies = new Cookies();
 
     if (cookies.get("email") !== undefined) {
@@ -109,20 +162,22 @@ function Connection() {
       return;
     }
 
-    if(emailconfirm===""){
-      alert("email incorrect");
+    if (emailconfirm === "") {
+      console.log("email incorrect");
       return;
     }
-    if(adversaire===""){
-      alert("adversaire incorrect");
+    if (adversaire === "") {
+      console.log("adversaire incorrect");
       return;
     }
 
     fetch("http://localhost:8000/insert/tirreact", {
+
+
       method: "POST",
       body: JSON.stringify({
         email: emailconfirm.split("Connecte ")[1].split("true")[0],
-        adversaire:adversaire,
+        adversaire:adv,
         posX: x2,
         posY: y2,
       }),
@@ -135,6 +190,8 @@ function Connection() {
           console.log(data.message);
           cleartirspresent();
           tirspresentParAdversaire();
+          updatej1();
+          updatej2();
         });
       })
       .catch((err) => {
@@ -168,13 +225,90 @@ function Connection() {
       .then((resp) => {
         resp.json().then((data) => {
           console.log(data.message);
-          
         });
       })
       .catch((err) => {
         console.log(err);
       });
   }
+  function updatej1() {
+    let adv = "";
+    console.log("----" + adversaire);
+    if (
+      emailconfirm === undefined ||
+      emailconfirm === null ||
+      emailconfirm === "" ||
+      adversairetext === null ||
+      adversairetext === undefined ||
+      adversairetext === ""
+    ) {
+      return;
+    }
+    if (adversairetext.split("/")[1] === emailconfirm) {
+      adv = adversairetext.split("/")[0];
+    } else {
+      adv = adversairetext.split("/")[1];
+    }
+    console.log("////////" + adv);
+    fetch("http://localhost:8000/insert/updatej1React/", {
+      method: "POST",
+      body: JSON.stringify({
+        tourj1: 1,
+        joueur1: emailconfirm.split("Connecte ")[1].split("true")[0],
+        joueur2: adv,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        resp.json().then((data) => {
+          console.log(data.message);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function updatej2() {
+    let adv = "";
+    if (
+      emailconfirm === undefined ||
+      emailconfirm === null ||
+      emailconfirm === "" ||
+      adversairetext === null ||
+      adversairetext === undefined ||
+      adversairetext === ""
+    ) {
+      return;
+    }
+    if (adversairetext.split("/")[1] === emailconfirm) {
+      const adv = adversairetext.split("/")[0];
+    } else {
+      adv = adversairetext.split("/")[1];
+    }
+
+    fetch("http://localhost:8000/insert/updatej2React/", {
+      method: "POST",
+      body: JSON.stringify({
+        tourj1: 0,
+        joueur2: adv,
+        joueur1: emailconfirm.split("Connecte ")[1].split("true")[0],
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        resp.json().then((data) => {
+          console.log(data.message);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   function postDeconnexion() {
     /*fetch("http://localhost:8000/deconnexion", {
       method: "POST",
@@ -208,6 +342,7 @@ function Connection() {
       if (response.ok) {
         let data2 = response.json().then((data) => {
           console.log(data.message);
+
           let quipremier = [];
           let quideuxieme = [];
           data.message.forEach((element) => {
@@ -286,6 +421,23 @@ function Connection() {
     });
   }
   function tirspresentParAdversaire() {
+    let adv = "";
+    console.log("----" + adversaire);
+    if (
+      emailconfirm === undefined ||
+      emailconfirm === null ||
+      emailconfirm === "" ||
+      adversairetext === null ||
+      adversairetext === undefined ||
+      adversairetext === ""
+    ) {
+      return;
+    }
+    if (adversairetext.split("/")[1] === emailconfirm) {
+      adv = adversairetext.split("/")[0];
+    } else {
+      adv = adversairetext.split("/")[1];
+    }
     for (let i = 0; i < 5; i++) {
       for (let j = 0; j < 5; j++) {
         if (document.getElementById("td" + i + j)) {
@@ -295,31 +447,34 @@ function Connection() {
         }
       }
     }
-    if(emailconfirm===""||adversaire===""){
-      alert("Probème sur email ou adversaire");
-      return
+    if (emailconfirm === "" || adv === "") {
+      console.log("Probème sur email ou adversaire");
+      return;
     }
 
-    fetch("http://localhost:8000/tirs/" + emailconfirm.split("Connecte ")[1].split("true")[0] +"/"+ adversaire).then(
-      function (response) {
-        // The API call was successful!
+    fetch(
+      "http://localhost:8000/tirs/" +
+        emailconfirm.split("Connecte ")[1].split("true")[0] +
+        "/" +
+        adv
+    ).then(function (response) {
+      // The API call was successful!
 
-        if (response.ok) {
-          let data2 = response.json().then((data) => {
-            console.log(data);
-            for (let i = 0; i < data.length; i++) {
-              if (
-                document.getElementById("td" + data[i].placeX + data[i].placeY)
-              ) {
-                document
-                  .getElementById("td" + data[i].placeX + data[i].placeY)
-                  .classList.add("tir");
-              }
+      if (response.ok) {
+        let data2 = response.json().then((data) => {
+          console.log(data);
+          for (let i = 0; i < data.length; i++) {
+            if (
+              document.getElementById("td" + data[i].placeX + data[i].placeY)
+            ) {
+              document
+                .getElementById("td" + data[i].placeX + data[i].placeY)
+                .classList.add("tir");
             }
-          });
-        }
+          }
+        });
       }
-    );
+    });
   }
   function bateauPresent() {
     fetch("http://localhost:8000/bateauTT").then(function (response) {
@@ -359,7 +514,7 @@ function Connection() {
         <header>
           <h1>Bataille Navale</h1>
         </header>
-      
+
         <div className="nav">
           {" "}
           <div>
@@ -370,41 +525,88 @@ function Connection() {
             ))}
           </div>
           <div>
+            <select
+               onLoad={(e) => {
+                let index = e.nativeEvent.target.selectedIndex;
+
+                setAdversaire(e.nativeEvent.target[index].value);
+                setAdversaireText(e.nativeEvent.target[index].text);
+              }}
+            
+              onChange={(e) => {
+                let index = e.nativeEvent.target.selectedIndex;
+
+                setAdversaire(e.nativeEvent.target[index].value);
+                setAdversaireText(e.nativeEvent.target[index].text);
+              }}
+            >
+              {partieSelect.map((d) => (
+                <option tourj1={d.tourj1} value={d.idAdversaire}>
+                  {d.joueur1}
+                  {"/" + d.joueur2}{" "}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
             {state.map((d) => (
               <div>{d.joueur2}</div>
             ))}
           </div>
         </div>
         <div className="centrer">
-        <div>
-        <button onClick={()=>{if (document.querySelector(".nav").style.display === 'none') {document.querySelector(".nav").style.display="block"}else{document.querySelector(".nav").style.display="none"; }}}>parties</button>
-        </div>
+          <div>
+            <button
+              onClick={() => {
+                if (document.querySelector(".nav").style.display === "none") {
+                  document.querySelector(".nav").style.display = "block";
+                } else {
+                  document.querySelector(".nav").style.display = "none";
+                }
+              }}
+            >
+              parties
+            </button>
+          </div>
           <div>
             <button onClick={() => cleartirspresent()}></button>
           </div>
           <div>
-        <button onClick={()=>{if (document.querySelector("#connection").style.display === 'none') {document.querySelector("#connection").style.display="block"}else{document.querySelector("#connection").style.display="none"; }}}>Affiché connection</button>
-        </div>
-        <div id="connection">
-          <div>
-            <label>Email</label>
-            <input
-              onChange={(e) => {
-                setEmail(e.target.value);
+            <button
+              onClick={() => {
+                if (
+                  document.querySelector("#connection").style.display === "none"
+                ) {
+                  document.querySelector("#connection").style.display = "block";
+                } else {
+                  document.querySelector("#connection").style.display = "none";
+                }
               }}
-            ></input>
+            >
+              Affiché connection
+            </button>
           </div>
-          <div>
-            <label>Password</label>
-            <input type="password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            ></input>
-          </div>
-          <button onClick={() => postReq()}>Connexion</button>
-          <div>
+          <div id="connection">
+            <div>
+              <label>Email</label>
+              <input id="email"
+                onChange={(e) => {
+                
+                  setEmail(e.target.value);
+                    console.log("AAAAAAAAAAAA"+email);
+                }}
+              ></input>
             </div>
+            <div>
+              <label>Password</label>
+              <input
+                type="password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              ></input>
+            </div>
+            <button onClick={() => postReq()}>Connexion</button>
             <label>adversaire</label>
             <input
               onChange={(e) => {
@@ -432,7 +634,7 @@ function Connection() {
                 }}
               ></input>
             </div>
-            <div></div>
+            <select id="adversaireSelect"></select>
             <div className="but">
               <button onClick={() => postReq()}>Connection</button>
               <button onClick={() => postDeconnexion()}>deconnexion</button>
